@@ -1,32 +1,448 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>M BAGAS KHOIRULLAH</title>
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background-color: #f4f4f4;
-    }
-    h1 {
-      color: #3b82f6;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resume OOP Dart - Konstruktor & Enkapsulasi</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, sans-serif;
+}
+
+body{
+display:flex;
+background:#0f172a;
+color:#e2e8f0;
+}
+
+/* PROGRESS BAR */
+
+#progress{
+position:fixed;
+top:0;
+left:0;
+height:4px;
+background:#38bdf8;
+width:0%;
+z-index:2000;
+}
+
+/* MENU */
+
+.menu-btn{
+position:fixed;
+top:15px;
+left:15px;
+font-size:22px;
+background:#38bdf8;
+border:none;
+padding:6px 12px;
+border-radius:6px;
+cursor:pointer;
+z-index:1500;
+display:none;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:260px;
+height:100vh;
+background:#020617;
+padding:25px;
+position:fixed;
+overflow:auto;
+border-right:1px solid #1e293b;
+transition:0.3s;
+}
+
+.sidebar h2{
+color:#38bdf8;
+margin-bottom:15px;
+}
+
+.sidebar input{
+width:100%;
+padding:8px;
+margin-bottom:15px;
+border-radius:6px;
+border:none;
+background:#0f172a;
+color:white;
+}
+
+.sidebar a{
+display:block;
+padding:10px;
+margin-bottom:6px;
+text-decoration:none;
+color:#cbd5f5;
+border-radius:6px;
+transition:0.25s;
+}
+
+.sidebar a:hover{
+background:#1e293b;
+padding-left:14px;
+}
+
+/* CONTENT */
+
+.content{
+margin-left:260px;
+padding:40px;
+max-width:900px;
+}
+
+header{
+margin-bottom:40px;
+}
+
+header h1{
+font-size:34px;
+color:#38bdf8;
+}
+
+.identity{
+opacity:0.8;
+margin-top:6px;
+}
+
+/* SECTION */
+
+section{
+margin-bottom:60px;
+}
+
+section h2{
+color:#7dd3fc;
+margin-bottom:10px;
+}
+
+/* CARD */
+
+.card{
+background:#020617;
+border:1px solid #1e293b;
+border-radius:10px;
+padding:20px;
+margin-top:15px;
+transition:0.25s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* CODE */
+
+pre{
+background:#0f172a;
+padding:15px;
+border-radius:8px;
+overflow:auto;
+font-size:14px;
+margin-top:10px;
+}
+
+/* BUTTON */
+
+.btn{
+margin-top:10px;
+padding:8px 14px;
+border:none;
+border-radius:6px;
+background:#38bdf8;
+color:black;
+cursor:pointer;
+transition:0.2s;
+}
+
+.btn:hover{
+background:#0ea5e9;
+}
+
+/* POPUP */
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+justify-content:center;
+align-items:center;
+z-index:4000;
+}
+
+.modal-content{
+width:90%;
+height:90%;
+background:#020617;
+border-radius:10px;
+padding:20px;
+display:flex;
+flex-direction:column;
+}
+
+.modal-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.modal-header h3{
+color:#38bdf8;
+}
+
+.close{
+font-size:22px;
+cursor:pointer;
+}
+
+/* IFRAME */
+
+#dartpadFrame{
+flex:1;
+border:none;
+border-radius:8px;
+background:white;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.menu-btn{
+display:block;
+}
+
+.sidebar{
+transform:translateX(-100%);
+}
+
+.sidebar.active{
+transform:translateX(0);
+}
+
+.content{
+margin-left:0;
+padding:70px 25px;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
-<h1>M BAGAS KHOIRULLAH</h1>
+<div id="progress"></div>
 
-<p>ini coding latihan 1 
-<a href="https://gist.github.com/BagasKhoirullah/a8006d393a8e924da45bbfc8ac3719f5" target="_blank">source code</a></p>
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-<iframe 
-  src="https://dartpad.dev/embed-dart.html?id=a8006d393a8e924da45bbfc8ac3719f5"
-  width="100%" 
-  height="500px">
-</iframe>
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>Daftar Isi</h2>
+
+<input type="text" placeholder="Cari materi..." onkeyup="searchMenu(this)">
+
+<a href="#review">Review OOP</a>
+<a href="#jenis">Jenis Constructor</a>
+<a href="#named">Named Constructor</a>
+<a href="#constant">Constant Constructor</a>
+<a href="#initializer">Initializer List</a>
+<a href="#praktik1">Praktik 1</a>
+<a href="#encapsulation">Enkapsulasi</a>
+<a href="#getter">Getter</a>
+<a href="#setter">Setter</a>
+<a href="#validasi">Getter & Setter Validasi</a>
+<a href="#praktik2">Praktik 2</a>
+<a href="#login">Studi Kasus Login</a>
+<a href="#ringkasan">Ringkasan</a>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<header>
+
+<h1>Konstruktor & Enkapsulasi</h1>
+<p>Resume Materi OOP Dart - Sesi 2</p>
+
+<div class="identity">
+Nama: <b>M. Bagas Khoirullah</b> | NIM: <b>251410016</b>
+</div>
+
+</header>
+
+<!-- REVIEW -->
+
+<section id="review">
+<h2>Review OOP</h2>
+<div class="card">
+<ul>
+<li>OOP adalah paradigma pemrograman berbasis objek</li>
+<li>Class adalah blueprint</li>
+<li>Object adalah instance</li>
+<li>Constructor digunakan untuk inisialisasi objek</li>
+</ul>
+
+<pre id="code1">
+class Buku {
+String judul;
+Buku(this.judul);
+}
+</pre>
+
+<button class="btn" onclick="openDartpad('code1')">Jalankan di DartPad</button>
+</div>
+</section>
+
+<!-- NAMED -->
+
+<section id="named">
+<h2>Named Constructor</h2>
+
+<div class="card">
+
+<pre id="code2">
+class Mobil {
+
+String? merk;
+int? tahun;
+
+Mobil(this.merk,this.tahun);
+
+Mobil.baru(){
+merk='Toyota';
+tahun=2023;
+}
+
+Mobil.dariJson(Map json){
+merk=json['merk'];
+tahun=json['tahun'];
+}
+
+}
+</pre>
+
+<button class="btn" onclick="openDartpad('code2')">Jalankan di DartPad</button>
+
+</div>
+
+</section>
+
+<!-- CONSTANT -->
+
+<section id="constant">
+<h2>Constant Constructor</h2>
+
+<div class="card">
+
+<pre id="code3">
+class Warna{
+
+final int r,g,b;
+
+const Warna(this.r,this.g,this.b);
+
+}
+</pre>
+
+<button class="btn" onclick="openDartpad('code3')">Jalankan di DartPad</button>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- POPUP -->
+
+<div id="modal" class="modal">
+
+<div class="modal-content">
+
+<div class="modal-header">
+<h3>Run Code - DartPad</h3>
+<span class="close" onclick="closeModal()">✖</span>
+</div>
+
+<iframe id="dartpadFrame"></iframe>
+
+</div>
+
+</div>
+
+<script>
+
+function openDartpad(id){
+
+let code=document.getElementById(id).innerText;
+
+let encoded=encodeURIComponent(code);
+
+let url="https://dartpad.dev/embed-dart.html?source="+encoded;
+
+document.getElementById("dartpadFrame").src=url;
+
+document.getElementById("modal").style.display="flex";
+
+}
+
+function closeModal(){
+
+document.getElementById("modal").style.display="none";
+document.getElementById("dartpadFrame").src="";
+
+}
+
+function toggleMenu(){
+document.querySelector(".sidebar").classList.toggle("active");
+}
+
+function searchMenu(input){
+
+let filter=input.value.toLowerCase();
+let links=document.querySelectorAll(".sidebar a");
+
+links.forEach(link=>{
+let text=link.innerText.toLowerCase();
+link.style.display=text.includes(filter)?"block":"none";
+});
+
+}
+
+window.onscroll=function(){
+
+let winScroll=document.documentElement.scrollTop;
+let height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+let scrolled=(winScroll/height)*100;
+
+document.getElementById("progress").style.width=scrolled+"%";
+
+}
+
+</script>
 
 </body>
 </html>
+```
 
+ 
